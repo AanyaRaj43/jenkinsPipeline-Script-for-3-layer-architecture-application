@@ -1,0 +1,38 @@
+pipeline {
+  agent any
+stages {
+  stage ('Checkout Repositories'){
+    parallel{
+      stage ('checkout frontend'){
+      steps {
+        get branch 'main' , 'url'
+        }
+}
+stage ('checkout backend'){
+  steps {
+    get branch 'main' , 'url'
+    }
+  }
+}
+}
+stage ('Build step') {
+  parallel{
+    stage ('Build frontend'){
+    steps {
+    dir ('frontend-repo '){
+#Run your build commands here
+sh 'npm install && run build '
+}
+}
+}
+stage ('Build Backened')
+{
+steps{
+dir ('backened-repo'){
+sh 'mvnclean install'
+}
+}
+}
+}
+}
+
